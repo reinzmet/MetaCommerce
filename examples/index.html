@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V9</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+	
+	
+	<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+		<div id= "SignInBlock" class="wrap-login100SignIn p-l-55 p-r-55 p-t-80 p-b-30">
+			<form class="login100-form validate-form">
+				<span class="login100-form-title p-b-37">
+					Sign In
+				</span>
+
+				<div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
+					<input class="input100" type="text" name="emailLogin" id="emailLogin" placeholder="Email Address">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-25" data-validate = "Enter password">
+					<input class="input100" type="password" name="passLogin" id="passLogin" placeholder="Password">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button id="SignIn" class="login100-form-btn">
+						Sign In
+					</button>
+				</div>
+
+				<div class="text-center p-t-57 p-b-20">
+					<span class="txt1">
+						Or login with
+					</span>
+				</div>
+
+				<div class="flex-c p-b-112">
+					<a href="#" class="login100-social-item">
+						<i class="fa fa-facebook-f"></i>
+					</a>
+
+					<a href="#" class="login100-social-item">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+					</a>
+				</div>
+
+				<div class="text-center">
+					<button onclick="GoToSignUp()">
+						<a href="#" class="txt2 hov1">
+							Sign Up
+						</a>
+					</button>
+				</div>
+			</form>
+
+			
+		</div>
+
+		<div id= "SignUpBlock" class="wrap-login100SignUp p-l-55 p-r-55 p-t-80 p-b-30">
+			<form class="login100-form validate-form">
+				<span class="login100-form-title p-b-37">
+					Sign Up
+				</span>
+
+				<div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
+					<input class="input100" type="text" name="nameRegister" id="nameRegister" name="name" placeholder="Name">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
+					<input class="input100" type="text" name="emailRegister" id="emailRegister" placeholder="Email Address">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-25" data-validate = "Enter password">
+					<input class="input100" type="password" name="passRegister" id="passRegister" placeholder="Password">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button id="SignUp" class="login100-form-btn" onclick="Register">
+						Sign Up
+					</button>
+				</div>
+
+				<div class="text-center p-t-57 p-b-20">
+					<span class="txt1">
+						Or login with
+					</span>
+				</div>
+
+				<div class="flex-c p-b-112">
+					<a href="#" class="login100-social-item">
+						<i class="fa fa-facebook-f"></i>
+					</a>
+
+					<a href="#" class="login100-social-item">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+					</a>
+				</div>
+
+				<div class="text-center">
+					<button onclick="GoToSignIn()">
+						<a href="#" class="txt2 hov1">
+							Sign In
+						</a>
+					</button>
+				</div>
+			</form>
+
+			
+		</div>
+	</div>
+	
+
+
+	
+
+	<script>
+		function GoToSignIn() {
+        var x = document.getElementById("SignUpBlock");
+        var y = document.getElementById("SignInBlock");
+        x.style.display = "none";
+        y.style.display = "block";
+		console.log(errorCode);
+		console.log(errorMessage);
+      }
+
+      function GoToSignUp() {
+        var x = document.getElementById("SignUpBlock");
+        var y = document.getElementById("SignInBlock");
+        x.style.display = "block";
+        y.style.display = "none";
+      }
+
+
+
+	</script>
+	
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+		import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js";
+		import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
+		import { getDatabase , ref ,set} from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+
+		const firebaseConfig = {
+		  apiKey: "AIzaSyCLglMUvbtRqmYy1llRRkPZ2nQH2AD5d-o",
+		  authDomain: "flipkart-grid-a91a4.firebaseapp.com",
+		  databaseURL: "https://flipkart-grid-a91a4-default-rtdb.firebaseio.com",
+		  projectId: "flipkart-grid-a91a4",
+		  storageBucket: "flipkart-grid-a91a4.appspot.com",
+		  messagingSenderId: "114404081154",
+		  appId: "1:114404081154:web:f0c01462cc8ebe7db3b11b",
+		  measurementId: "G-WMLZBR7ZB2"
+		};
+	  
+		// Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const analytics = getAnalytics(app);
+		const auth = getAuth();
+		const database = getDatabase(app);
+	
+		SignUp.addEventListener('click',(e) => {
+			const email = document.getElementById('emailRegister').value
+			const pass = document.getElementById('passRegister').value
+			const name = document.getElementById('nameRegister').value
+	
+			console.log("Email: ",email)
+			console.log("Pass: ",pass)
+			createUserWithEmailAndPassword(auth, email, pass)
+			  .then((userCredential) => {
+			// Signed in 
+			const user = userCredential.user;
+			console.log("Uid: ",user.uid)
+			const db = getDatabase();
+       	 	set(ref(db, 'users/' + user.uid), {
+            	username: name,
+            	email: email,
+            	pass : pass
+            });
+
+			function setCookie(cname, cvalue, exdays) {
+              const d = new Date();
+              d.setTime(d.getTime() + (exdays*24*60*60*1000));
+              let expires = "expires="+ d.toUTCString();
+              console.log("in Set: "+expires);
+              document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+            
+            setCookie("userCredential", user.uid, 1);
+
+			window.location.replace("http://localhost:8080/home.html");
+	
+			  }).catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			console.log(errorCode);
+			console.log(errorMessage);
+		});
+	
+		})
+
+
+		SignIn.addEventListener('click',(e) => {
+			const email = document.getElementById('emailLogin').value
+			const pass = document.getElementById('passLogin').value
+	
+			console.log("Email: ",email)
+			console.log("Pass: ",pass)
+
+			signInWithEmailAndPassword(auth, email, pass)
+  				.then((userCredential) => {
+    		// Signed in 
+				const user = userCredential.user;
+
+				function setCookie(cname, cvalue, exdays) {
+              	const d = new Date();
+              	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+              	let expires = "expires="+ d.toUTCString();
+              	console.log("in Set: "+expires);
+              	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            	}
+            
+            	setCookie("userCredential", user.uid, 1);
+
+				window.location.replace("http://localhost:8080/home.html");
+
+				})
+  				.catch((error) => {
+  				    const errorCode = error.code;
+    		    	const errorMessage = error.message;
+  			});
+
+			
+		})
+	
+	  </script>
+
+	<div id="dropDownSelect1"></div>
+	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.js"></script>
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Login V9</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+        <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/util.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script>
+            var UID;
+            var total=0;
+        </script>
+    </head>
+    <body>
+
+
+    <script>
+        function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        console.log("in Get: "+ca);
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if(c.indexOf(name) == 0)
+                return c.substring(name.length,c.length);
+            }
+        return "";
+        }
+        var val = getCookie("userCredential");
+        console.log(val)
+        UID = val;
+    </script>
+        
+        
+        <div class="container-login100Cart" style="background-image: url('images/bg-02.png');">
+            <div id= "CartBlock" class="wrap-login100Cart p-l-55 p-r-55 p-t-80 p-b-30">
+                <div class="text-left">
+                    <button onclick="GoBack()">
+                        <a href="#" class="txt2 hov1">
+                            < Back
+                        </a>
+                    </button>
+                </div>
+
+                <form class="login100-form validate-form">
+                    <span class="login100-form-title p-b-37">
+                        Cart
+                    </span>
+
+                    <ul id='CartList'>
+                        
+                    </ul>
+
+                    <script type="module">
+                        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+                        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js";
+                        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
+                        import { getDatabase , onValue, ref , child, get} from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+                    
+                        const firebaseConfig = {
+                          apiKey: "AIzaSyCLglMUvbtRqmYy1llRRkPZ2nQH2AD5d-o",
+                          authDomain: "flipkart-grid-a91a4.firebaseapp.com",
+                          databaseURL: "https://flipkart-grid-a91a4-default-rtdb.firebaseio.com",
+                          projectId: "flipkart-grid-a91a4",
+                          storageBucket: "flipkart-grid-a91a4.appspot.com",
+                          messagingSenderId: "114404081154",
+                          appId: "1:114404081154:web:f0c01462cc8ebe7db3b11b",
+                          measurementId: "G-WMLZBR7ZB2"
+                        };
+                      
+                        // Initialize Firebase
+                        const app = initializeApp(firebaseConfig);
+                        const analytics = getAnalytics(app);
+                        const auth = getAuth();
+                        const database = getDatabase(app);
+
+                        const db = getDatabase();
+                        //console.log(db)
+
+                        var ItemNo = 0;
+                        function addItemstoCart(name,price){
+                            var ul = document.getElementById('CartList');
+                            var header = document.createElement('h2');
+
+                            header.innerHTML=name;
+
+                            var _qty = document.createElement('li');
+                            var _price = document.createElement('li');
+                            total=total+price;
+                            console.log("Total: "+total);
+                            document.getElementById("myTotal").innerHTML = total;
+
+                            _qty.innerHTML='Qty : 1';
+                            _price.innerHTML='Price : '+price;
+
+                            ul.appendChild(header);
+                            ul.appendChild(_qty);
+                            ul.appendChild(_price);
+
+                        }
+
+                        function FetchAllData(){
+                            const cartlist = ref(db, 'cart/' + UID);
+                            onValue(cartlist, (snapshot) => {
+                                const data = snapshot.val();
+                                console.log(snapshot.val());
+                                snapshot.forEach(
+                                        function(childSnapshot){
+                                            let name = childSnapshot.val().Name;
+                                            console.log(childSnapshot.val().Name);
+                                            let price = childSnapshot.val().Price;
+                                            console.log(childSnapshot.val().Price);
+                                            addItemstoCart(name,price)
+                                        }
+                                    );
+                                    
+                            });
+
+                        }
+
+
+                        window.onload(FetchAllData());
+
+                        // var userDataRef = db.ref("cart").childData(UID);
+                        // userDataRef.once("value").then(function(snapshot) {
+                        // snapshot.forEach(function(childSnapshot) {
+                            
+                        //     var key = childSnapshot.key;
+                        //     var childData = childSnapshot.val();              
+
+                        //     var name_val = childSnapshot.val().Name;
+                        //     var price_val = childSnapshot.val().Price;
+
+                        //     $("#name").append(name_val);
+                        //     $("#price").append(price_val);
+                        //     console.log("name: ",name_val);
+                        //     console.log("price: ",price_val);
+
+                        //     });
+                        // });
+                    
+                    </script>
+                    
+
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-37">
+                            Total : <span id="myTotal"></span></h1>
+                        </span>
+
+
+                    <div class="container-login100-form-btnPlaceOrder">
+                        <button id="SignIn" class="login100-form-btn">
+                            Place Order
+                        </button>
+                    </div>
+
+                    
+                </form>
+
+                
+            </div>
+
+        </div>
+        
+
+
+        
+
+        <script>
+            function GoBack() {
+                window.location.replace("http://localhost:8080/home.html");
+        }
+
+
+
+        </script>
+        
+
+    </body>
+    </html>

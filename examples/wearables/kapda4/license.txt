@@ -1,0 +1,11 @@
+Model Information:
+* title:	Black jeans
+* source:	https://sketchfab.com/3d-models/black-jeans-50fd334123164e3eaeb95fffd88f166b
+* author:	assetfactory (https://sketchfab.com/assetfactory)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Black jeans" (https://sketchfab.com/3d-models/black-jeans-50fd334123164e3eaeb95fffd88f166b) by assetfactory (https://sketchfab.com/assetfactory) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

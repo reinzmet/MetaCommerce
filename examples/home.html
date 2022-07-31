@@ -1,0 +1,485 @@
+<!-- adapter: wseasyrtc; -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Basic Example — Networked-Aframe</title>
+  <meta name="description" content="Basic Example — Networked-Aframe" />
+
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.slim.js"></script>
+  <script src="/easyrtc/easyrtc.js"></script>
+  <script src="/dist/networked-aframe.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
+  <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v$npm_package_version/dist/aframe-physics-system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+  <script> var UID;</script>
+  <script>
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        console.log("in Get: "+ca);
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if(c.indexOf(name) == 0)
+            return c.substring(name.length,c.length);
+        }
+        return "";
+        }
+        var val = getCookie("userCredential");
+        console.log(val);
+        UID = val;
+
+  </script>
+
+  <script>
+    NAF.schemas.getComponentsOriginal = NAF.schemas.getComponents;
+    NAF.schemas.getComponents = (template) => {
+      if (!NAF.schemas.hasTemplate('#avatar-template')) {
+        NAF.schemas.add({
+          template: '#avatar-template',
+          components: [
+            'position',
+            'rotation',
+            {
+              selector: '.head',
+              component: 'material',
+              property: 'color'
+            }
+          ]
+        });
+      }
+      const components = NAF.schemas.getComponentsOriginal(template);
+      return components;
+    };
+
+    AFRAME.registerComponent("keyboard-rotation", {
+      init: function() {
+
+        document.addEventListener('keydown', evt => {
+          // react only to a/d
+          if ((evt.key === "a" || evt.key === "d" || evt.key === "w")) ;
+            man.setAttribute('animation-mixer', {timeScale: 1});
+          if (evt.key == "s") 
+            man.setAttribute('animation-mixer', {timeScale: 0});
+        });
+      }
+    });
+
+
+  </script>
+
+  <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
+  <script src="/js/spawn-in-circle.component.js"></script>
+  <script src="/js/tppcontrols.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<!-- <script>
+  AFRAME.registerComponent("mylink", {
+  init: function() {
+    this.el.addEventListener("click", (e)=> {
+       window.location = this.data.href;
+    })
+  }
+})
+
+</script> -->
+<body>
+
+
+  <a-scene 
+      cursor="rayOrigin: mouse"
+      renderer="colorManagement: true;"
+      physics="gravity: 0.8"
+      networked-scene="
+      room: basic;
+      debug: true;
+      adapter: easyrtc;
+      audio: true;
+      video: true;
+    ">
+    <a-assets>
+      <a-asset-item id="store" src="Final Store.glb"></a-asset-item>
+      <a-asset-item id="person" src="walking_man_model/scene.gltf"></a-asset-item>
+      <a-asset-tiem id="zjacket" src="wearables/kapda1.gltf"></a-asset-tiem>
+      <a-asset-tiem id="zvictorian" src="wearables/kapda2/scene.gltf"></a-asset-tiem>
+      <a-asset-tiem id="zjeans" src="wearables/kapda4/scene.gltf"></a-asset-tiem>
+      <a-asset-tiem id="zshoes" src="wearables/kapda5.gltf"></a-asset-tiem>
+      <a-asset-tiem id="zroller" src="wearables/kapda6.gltf"></a-asset-tiem>
+
+      <img id="roller" src="qr/roller.jpg">
+      <img id="jacket" src="qr/jacket.png">
+      <img id="victoria" src="qr/victorian.png">
+      <img id="jeans" src="qr/jeans.png">
+      <img id="shoes" src="qr/shoes.png">
+
+    </a-assets>
+
+    <!-- <a-plane src="floor.jpg" height=100 widht=100 rotation="-90 0 0"></a-plane> -->
+    <a-sky color="#6EBAA7"></a-sky>
+    <a-entity environment="preset:contact" scale = "2 2 2"></a-entity>
+    <a-entity gltf-model="#store" position="1 0 1" animation-mixer="clip:Rotation" ></a-entity>
+    <a-entity light="type:ambient;intensity:0.5; " ></a-entity>
+
+    <a-entity id ="click1" gltf-model="#zjacket" position="-32 0 -12.4" rotation="0 90 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#jacket" position="-31.2 0.6 -12.5" rotation="0 90 0 "></a-image>
+    
+    <a-entity id ="click2" gltf-model="#zvictorian" position="-32 1.4 -14.2" rotation="0 90 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#victoria" position="-31.2 0.6 -14.3" rotation="0 90 0 "></a-image>
+ 
+    <a-entity id ="click3" gltf-model="#zjeans" position="-22 1.4 -12.4" rotation="0 270 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="0.4 0.4 0.4">
+    </a-entity> <a-image src="#jeans" position="-23.3 0.6 -12.5" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click4" gltf-model="#zjacket" position="-22 0 -14.2" rotation="0 270 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#jacket" position="-23.3 0.6 -14.3" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click5" gltf-model="#zjacket" position="-32 0 14.75" rotation="0 90 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#jacket" position="-30.9 0.55 14.7" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click6" gltf-model="#zvictorian" position="-32 1.4 16.45" rotation="0 90 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#victoria" position="-30.9 0.55 16.45" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click7" gltf-model="#zjeans" position="-22 1.4 14.75" rotation="0 270 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="0.4 0.4 0.4">
+    </a-entity> <a-image src="#jeans" position="-22.9 0.55 14.75" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click8" gltf-model="#zjacket" position="-22 0 16.45" rotation="0 270 0 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      scale="2 2 2">
+    </a-entity> <a-image src="#jacket" position="-22.9 0.55 16.45" rotation="0 90 0 "></a-image>
+
+    <a-entity id ="click9" gltf-model="#zroller" position="-29.5 1.5 -20" rotation="0 0 0 " scale = "2 2 2"
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      >
+    </a-entity> <a-image src="#roller" position="-29.5 0.6 -18.85" rotation="0 0 0 " scale="0.8 0.8 0.8"></a-image>
+
+    <a-entity id ="click10" gltf-model="#zshoes" position="-24.5 1.5 -20" rotation="0 0 0 " scale = "2.5 2.5 2.5 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      >
+    </a-entity> <a-image src="#shoes" position="-24.6 0.6 -18.85" rotation="0 0 0" scale = "0.8 0.8 0.8"></a-image>
+
+    <a-entity id ="click11" gltf-model="#zroller" position="-29.5 1.5 22.5" rotation="0 0 0 " scale = "2 2 2"
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      >
+    </a-entity>  <a-image src="#roller" position="-29.6 0.6 21.15" rotation="0 0 0 " scale="0.8 0.8 0.8"></a-image>
+
+    <a-entity id ="click12" gltf-model="#zshoes" position="-24.5 1.5 22.5" rotation="0 0 0 " scale = "2.5 2.5 2.5 "
+      animation="property: rotation; to: 0 -360 0; loop: true; dur: 10000"
+      >
+    </a-entity>  <a-image src="#shoes" position="-24.6 0.6 21.15" rotation="0 0 0 " scale="0.8 0.8 0.8"></a-image>
+
+    <a-assets>
+      <template id="avatar-template">
+        <a-entity>
+          <a-entity class="avatar" networked-audio-source gltf-model="#person" rotation="0 180 0" position="0 0 0" scale="0.01 0.01 0.01" animation-mixer="clip:Take 001" ></a-entity>
+          <a-circle color="#FFF" radius="0.35" position="-0.5 2 0" material="side: back" networked-video-source>
+          </a-circle>
+          <a-circle color="#FFF" radius="0.35" position="-0.5 2 0" material="side: front" networked-video-source>
+          </a-circle>
+          <a-circle color="#FFF" 
+          radius="0.35"
+          position="0.5 2 0.001" 
+          material="side: back"
+          networked-video-source="streamName: screen">
+          </a-circle>
+        <a-circle color="#FFF" 
+          radius="0.35"
+          position="0.5 2 0.001" 
+          material="side: front"
+          networked-video-source="streamName: screen">
+        </a-circle>
+        </a-entity>
+        </a-entity>
+      </template>
+    </a-assets>
+
+    <a-entity follow-box="target: #player" look-controls>
+      <a-entity camera position="0 1.6 1.5"></a-entity>
+    </a-entity>
+
+    <a-entity id="cameraRig" keyboard-rotation>
+      <a-entity id="player" 
+      networked="template:#avatar-template;attachTemplateToLocal:false;" 
+      camera rotation="0 180 0" 
+      position="0 1.6 0" 
+      spawn-in-circle="radius:3" 
+      wasd-controls="speed: 35; " 
+      rotate-with-camera look-controls>
+
+       <a-entity id="man" networked-audio-source gltf-model="#person" rotation="0 180 0" position="0 0 0" class="head" visible="true" scale="0.01 0.01 0.01" animation-mixer="clip:Take 001; timeScale: 0" dynamic-body="shape: sphere"></a-entity>
+
+      </a-entity>
+    </a-entity>
+    
+    
+  </a-scene>
+
+  <div class="actions">
+    <button id="mic-btn" type="button" class="button">Mute Mic</button>
+    <button id="camera-btn" type="button" class="button">Hide Camera</button>
+    <button id="screen-btn" type="button" class="button">Share screen</button>
+    <button id="cart-btn" type="button" class="button">View Cart</button>
+  </div>
+
+  <script id="firebase" type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js"
+    import { getDatabase , onValue, ref , child, get, push,update, set} from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCLglMUvbtRqmYy1llRRkPZ2nQH2AD5d-o",
+      authDomain: "flipkart-grid-a91a4.firebaseapp.com",
+      databaseURL: "https://flipkart-grid-a91a4-default-rtdb.firebaseio.com",
+      projectId: "flipkart-grid-a91a4",
+      storageBucket: "flipkart-grid-a91a4.appspot.com",
+      messagingSenderId: "114404081154",
+      appId: "1:114404081154:web:f0c01462cc8ebe7db3b11b",
+      measurementId: "G-WMLZBR7ZB2"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const database = getDatabase(app);
+
+    const db = getDatabase();
+    const dbRef = ref(db);
+
+
+
+
+      function PushNewData(productid){
+
+        // get(child(dbRef, `products/${productid}`)).then((snapshot) => {
+        //     const data = snapshot.val();
+        //     console.log(data);
+        //     dataPush=data;
+        //     });
+
+
+
+
+
+            const cartlist = ref(db, 'products/' + productid);
+            onValue(cartlist, (snapshot) => {
+            const data = snapshot.val();
+            console.log(snapshot.val());
+            if (snapshot.exists()) {
+                      let name = snapshot.val().Name;
+                      console.log(name);
+                      let price = parseInt(snapshot.val().Price);
+                      console.log(price);
+                      addItemstoCart(name,price);
+                      
+                    }
+                                    
+            });
+      }
+
+      function addItemstoCart(name, price)
+        {
+          const newPostKey = push(child(ref(db), 'cart/'+ UID)).key;
+
+        set(ref(db,"cart/"+UID+"/"+newPostKey),{
+          "Name": ""+name,
+          "Price": price
+        }).then(()=>{
+          alert("Added To Cart");
+        }).
+        catch((error)=>{
+          alert("Unsuccesfull, Try Again");
+        });    
+
+        }
+
+
+    
+
+
+
+    const zaraBtn = document.getElementById('click1');
+    const zaraBtn2 = document.getElementById('click2');
+    const zaraBtn3 = document.getElementById('click3');
+    const zaraBtn4 = document.getElementById('click4');
+    const zaraBtn5 = document.getElementById('click5');
+    const zaraBtn6 = document.getElementById('click6');
+    const zaraBtn7 = document.getElementById('click7');
+    const zaraBtn8 = document.getElementById('click8');
+    const zaraBtn9 = document.getElementById('click9');
+    const zaraBtn10 = document.getElementById('click10');
+    const zaraBtn11 = document.getElementById('click11');
+    const zaraBtn12 = document.getElementById('click12');
+
+    zaraBtn.addEventListener('click', function() {
+        console.log("heelooo");
+
+        PushNewData("0");
+
+
+      });
+
+      zaraBtn2.addEventListener('click', function() {
+        console.log("heelooo");
+
+        PushNewData("1");
+
+
+      });
+
+      zaraBtn3.addEventListener('click', function() {
+        console.log("heelooo");
+
+        PushNewData("2")
+
+
+      });
+
+      zaraBtn4.addEventListener('click', function() {
+        console.log("heelooo");
+
+        PushNewData("0");
+
+
+      });
+
+      zaraBtn10.addEventListener('click', function() {
+        console.log("heelooo");
+
+        PushNewData("3");
+
+
+      });
+
+
+
+
+  </script>
+
+  <script>
+
+    
+    //get status fo wasd buttons
+    
+    // Mic status
+    let micEnabled = true;
+    // Mic button element
+    const micBtnEle = document.getElementById('mic-btn');
+
+    // Camera status
+    let cameraEnabled = true;
+
+    // Camera button element
+    const cameraBtnEle = document.getElementById('camera-btn');
+
+    // Screen share status
+    let screenEnabled = false;
+    // Screen share button element
+    const screenBtnEle = document.getElementById('screen-btn');
+
+    let cartEnabled = false;
+
+    const cartBtnEle = document.getElementById('cart-btn');
+
+    // On mobile remove elements that are resource heavy
+    const isMobile = AFRAME.utils.device.isMobile();
+
+    if (isMobile) {
+      const particles = document.getElementById('particles');
+      particles.parentNode.removeChild(particles);
+    }
+
+
+    function onConnect() {
+      console.log('onConnect', new Date());
+
+      //Adds the selected clothing to cart
+      
+
+      micBtnEle.addEventListener('click', function () {
+        NAF.connection.adapter.enableMicrophone(!micEnabled);
+        micEnabled = !micEnabled;
+        micBtnEle.textContent = micEnabled ? 'Unmute Mic' : 'Mute Mic';
+      });
+
+      // Handle camera button click (Off and On)
+      cameraBtnEle.addEventListener('click', function () {
+        NAF.connection.adapter.enableCamera(!cameraEnabled);
+        cameraEnabled = !cameraEnabled;
+        cameraBtnEle.textContent = cameraEnabled ? 'Show Camera' : 'Hide Camera';
+      });
+
+      // Handle screen button click (Off and On)
+      screenBtnEle.addEventListener('click', function () {
+        if (screenEnabled) {
+          NAF.connection.adapter.removeLocalMediaStream('screen');
+          screenEnabled = false;
+          screenBtnEle.textContent = 'Share screen';
+
+        } else {
+          navigator.mediaDevices.getDisplayMedia().then((stream) => {
+            NAF.connection.adapter.addLocalMediaStream(stream, 'screen');
+            screenEnabled = true;
+            screenBtnEle.textContent = 'Stop Screen';
+          });
+        }
+      });
+
+
+      // Handle screen button click (Off and On)
+      cartBtnEle.addEventListener('click', function () {
+
+
+        function setCookie(cname, cvalue, exdays) {
+  			const d = new Date();
+  			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  			let expires = "expires="+ d.toUTCString();
+			  console.log("in Set: "+expires);
+  			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
+			
+			//setCookie("userCredential", UID, 1);
+
+
+        window.location.replace("http://localhost:8080/cart.html");
+        if (cartEnabled) {
+          //NAF.connection.adapter.removeLocalMediaStream('screen');
+          cartEnabled = false;
+          cartBtnEle.textContent = 'Show Cart';
+
+        } else {
+          cartEnabled = true;
+          cartBtnEle.textContent = 'Close Cart';
+        }
+      });
+
+
+    }
+  </script>
+
+</body>
+
+</html> 

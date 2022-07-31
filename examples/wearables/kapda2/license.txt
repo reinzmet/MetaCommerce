@@ -1,0 +1,11 @@
+Model Information:
+* title:	a set of Victorian clothes
+* source:	https://sketchfab.com/3d-models/a-set-of-victorian-clothes-cfe0ad26828a42cebf49aea928ea8a15
+* author:	deymar (https://sketchfab.com/deymar)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "a set of Victorian clothes" (https://sketchfab.com/3d-models/a-set-of-victorian-clothes-cfe0ad26828a42cebf49aea928ea8a15) by deymar (https://sketchfab.com/deymar) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
