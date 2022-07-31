@@ -1,6 +1,6 @@
 # MetaCommerce 
 
-# Installation 
+# Installation
 
 Make sure you have `git` installed 
 ## Install `lfs` to download large files
@@ -22,9 +22,15 @@ git lfs install
 ```
 git clone https://github.com/reinzmet/MetaCommerce
 ```
+## Change working directory to MetaCommerce
 
+```
+cd MetaCommerce
+```
 
-## Install NPM Modules
+`If you have got code locally, then there is no need to clone the repo, follow the guide from here`
+
+# Install NPM Modules
 > Make sure that the NPM Version installed in your device is higher than 8.14.0
 
 ```
