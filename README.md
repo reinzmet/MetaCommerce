@@ -3,7 +3,7 @@
 # Installation 
 
 Make sure you have `git` installed 
-Then install lfs to download large files
+## Install `lfs` to download large files
 
 MacOS (Using Homebrew)
 ```
@@ -17,16 +17,16 @@ Windows
 git lfs install
 ```
 
-
-
 ## Clone the repository
 
 ```
 git clone https://github.com/reinzmet/MetaCommerce
 ```
-> Make sure that the NPM Version installed in your device is higher than 8.14.0
+
 
 ## Install NPM Modules
+> Make sure that the NPM Version installed in your device is higher than 8.14.0
+
 ```
 npm install
 ```
